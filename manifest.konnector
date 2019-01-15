@@ -74,7 +74,7 @@
     }
   },
   "developer": {
-    "name": "Marc POLYCARPE",
+    "name": "Marc Polycarpe",
     "url": "https://cozy.io"
   },
   "langs": ["fr", "en"],
@@ -104,6 +104,6 @@
       }
     }
   },
-  "banksTransactionRegExp": "\\btrustee\\b",
+  "banksTransactionRegExp": "\\bmab\\b",
   "manifest_version": "2"
 }
