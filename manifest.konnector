@@ -1,0 +1,109 @@
+{
+  "version": "1.0.0",
+  "name": "Connector MAB",
+  "type": "konnector",
+  "language": "node",
+  "icon": "icon.png",
+  "slug": "MAB",
+  "source": "git://github.com/konnectors/mab.git",
+  "editor": "Marc Polycarpe",
+  "vendor_link": "",
+  "categories": ["other"],
+  "fields": {
+    "syndic": {
+      "type": "dropdown",
+      "label": "Syndic",
+      "options": [
+        {
+          "name": "MAB Planchon",
+          "value": "MABPlanchon"
+        },
+        {
+          "name": "Agimalp",
+          "value": "agimalp"
+        },
+        {
+          "name": "PACULL Immobilier",
+          "value": "pacull"
+        },
+        {
+          "name": "C'est Géré Gestion Immobilière",
+          "value": "cgere"
+        },
+        {
+          "name": "Agence immobilière de Bellevue",
+          "value": "bellevue"
+        },
+        {
+          "name": "SOGIC",
+          "value": "sogic"
+        },
+        {
+          "name": "Ensemble Habitat",
+          "value": "ensemble_habitat"
+        },
+        {
+          "name": "Agence Saint Pierre",
+          "value": "agence_st_pierre"
+        }
+    },
+    "login": {
+      "type": "text"
+    },
+    "password": {
+      "type": "password"
+    },
+    "advancedFields": {
+      "folderPath": {
+        "advanced": true,
+        "isRequired": false
+      }
+    }
+  },
+  "data_types": [
+    "bill"
+  ],
+  "screenshots": [],
+  "permissions": {
+    "files": {
+      "type": "io.cozy.files"
+    },
+    "accounts": {
+      "type": "io.cozy.accounts",
+      "verbs": ["GET"]
+    }
+  },
+  "developer": {
+    "name": "Marc Polycarpe",
+    "url": "https://cozy.io"
+  },
+  "langs": ["fr", "en"],
+  "locales": {
+    "fr": {
+      "short_description": "Connecteur Syndic",
+      "long_description": "Ce connecteur récupère une liste de factures et d'appels de fonds sur votre compte propriétaire",
+      "permissions": {
+        "files": {
+          "description": "Utilisé pour sauvegarder les factures"
+        },
+        "accounts": {
+          "description": "Utilisé pour obtenir les données du compte"
+        }
+      }
+    },
+    "en": {
+      "short_description": "Trustee Connector",
+      "long_description": "This template fetches a list of bills and documents from your owner's account",
+      "permissions": {
+        "files": {
+          "description": "Required to save the bills"
+        },
+        "accounts": {
+          "description": "Required to get the account's data"
+        }
+      }
+    }
+  },
+  "banksTransactionRegExp": "\\bmab\\b",
+  "manifest_version": "2"
+}
