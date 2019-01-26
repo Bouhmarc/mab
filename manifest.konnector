@@ -5,7 +5,7 @@
   "language": "node",
   "icon": "icon.png",
   "slug": "MAB",
-  "source": "git://github.com/konnectors/mab.git",
+  "source": "git://github.com/bouhmarc/mab.git",
   "editor": "Marc Polycarpe",
   "vendor_link": "",
   "categories": ["other"],

@@ -1,13 +1,11 @@
 const {
   BaseKonnector,
   requestFactory,
-  signin,
   scrape,
-  saveFiles,  
+  saveFiles,
   log,
   errors
 } = require('cozy-konnector-libs')
-
 
 const request = requestFactory({
   // the debug mode shows all the details about http request and responses. Very useful for
@@ -24,6 +22,7 @@ const request = requestFactory({
 
 const baseUrl = 'http://administrateur-de-biens.immo/extranet/'
 module.exports = new BaseKonnector(start)
+var $;
 
 // The start function is run by the BaseKonnector instance only when it got all the account
 // information (fields). When you run this connector yourself in "standalone" mode or "dev" mode,
@@ -44,46 +43,44 @@ async function start(fields) {
   // common case in connectors
   log('info', 'Saving data to Cozy')
   await saveFiles(documents, fields, {
-    timeout: Date.now() + 300*1000
+    timeout: Date.now() + 300 * 1000
   })
 }
 
 // this shows authentication using the [signin function](https://github.com/konnectors/libs/blob/master/packages/cozy-konnector-libs/docs/api.md#module_signin)
 // even if this in another domain here, but it works as an example
 async function authenticate(username, password, syndic) {
-
   // Recuperation du nom du syndic
   //construction de l'url
-  var sURL = baseUrl + '?syndic=' + syndic;
+  var sURL = baseUrl + '?syndic=' + syndic
   //execution de la requete
-  $ = await request(sURL);
+  $ = await request(sURL)
   //parse pour recuperer le numero de client
-  var sNumSyndic = $('#clt').attr('value');
+  var sNumSyndic = $('#clt').attr('value')
 
   // les options de l'authentification
   var options = {
     method: 'POST',
     uri: 'http://administrateur-de-biens.immo/extranet/connexion.php',
     form: {
-        // Like <input type="text" name="name">
-        clt: sNumSyndic,
-        login: username,
-        password:password
-    },
-  };
+      // Like <input type="text" name="name">
+      clt: sNumSyndic,
+      login: username,
+      password: password
+    }
+  }
   // Envoie la requete en post
-  await request(options,function (err, response, body) {
-        // La requete renvoie Success ou Failed (en chaine, en brut dans le body)
-        if (body != 'Success') {
-          throw new Error(errors.LOGIN_FAILED);
-        }
-    });
+  await request(options, function(err, response, body) {
+    // La requete renvoie Success ou Failed (en chaine, en brut dans le body)
+    if (body != 'Success') {
+      throw new Error(errors.LOGIN_FAILED)
+    }
+  })
 }
 
 // The goal of this function is to parse a html page wrapped by a cheerio instance
 // and return an array of js objects which will be saved to the cozy by saveBills (https://github.com/konnectors/libs/blob/master/packages/cozy-konnector-libs/docs/api.md#savebills)
 function parseDocuments($, fields) {
-
   // La structure de ce que l'on doit importer
   // <button class="accordion">2018</button>
   //   <div class="panel">
@@ -99,8 +96,13 @@ function parseDocuments($, fields) {
     {
       // pour recuperer l'annee, il faut se positionner sur un lien (dans le LI, puis remonter)
       year: {
-       sel:'a',
-	fn: $node => $node.parent().parent().prev().text()
+        sel: 'a',
+        fn: $node =>
+          $node
+            .parent()
+            .parent()
+            .prev()
+            .text()
       },
       title: {
         sel: 'a'
@@ -111,13 +113,13 @@ function parseDocuments($, fields) {
         parse: src => `${baseUrl}/${src}`
       },
       filename: {
-        sel:'a'
+        sel: 'a'
       }
     },
     '.panel li'
   )
 
-  log('info','nb documents : ' +  docs.length);
+  log('info', 'nb documents : ' + docs.length)
 
   return docs.map(doc => ({
     ...doc,
@@ -130,4 +132,3 @@ function parseDocuments($, fields) {
     }
   }))
 }
-
