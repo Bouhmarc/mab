@@ -45,7 +45,7 @@
         {
           "name": "Agence Saint Pierre",
           "value": "agence_st_pierre"
-        }
+        }]
     },
     "login": {
       "type": "text"
